@@ -1,0 +1,36 @@
+stages:
+  linear_regression:
+    cmd: python linear_regression.py
+    deps:
+    - linear_regression.py
+    - new_cancer_reg.csv
+    outs:
+    - linear_regression_model.joblib
+  decision_tree:
+    cmd: python decision_tree.py
+    deps:
+    - decision_tree.py
+    - new_cancer_reg.csv
+    outs:
+    - decision_tree_model.joblib
+  catboost_model:
+    cmd: python catboost_model.py
+    deps:
+    - catboost_model.py
+    - new_cancer_reg.csv
+    outs:
+    - catboost_model.joblib
+  xgboost_model:
+    cmd: python xgboost_model.py
+    deps:
+    - new_cancer_reg.csv
+    - xgboost_model.py
+    outs:
+    - xgboost_model.joblib
+  mlp_model:
+    cmd: python mlp_model.py
+    deps:
+    - mlp_model.py
+    - new_cancer_reg.csv
+    outs:
+    - mlp_model.joblib
