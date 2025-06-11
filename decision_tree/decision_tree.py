@@ -15,7 +15,7 @@ y = df['TARGET_deathRate']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # 初始化决策树回归器
-dt = DecisionTreeRegressor(random_state=42)
+dt = DecisionTreeRegressor(random_state=42,max_depth=4)
 
 # 拟合模型
 dt.fit(X_train, y_train)

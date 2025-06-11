@@ -7,7 +7,7 @@ from tensorboardX import SummaryWriter
 import numpy as np
 
 # Load the dataset
-df = pd.read_csv('new_cancer_reg.csv')
+df = pd.read_csv('../new_cancer_reg.csv')
 
 # Extract features and target variable
 X = df.drop('TARGET_deathRate', axis=1)
@@ -56,14 +56,41 @@ plt.legend()
 plt.show()
 
 # Get all layer weights and plot a histogram
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 收集所有神经网络权重
 all_weights = np.array([])
 for coef in mlp.coefs_:
     all_weights = np.append(all_weights, coef.flatten())
-plt.figure(figsize=(10, 6))
-plt.hist(all_weights, bins=50)
-plt.xlabel('Weight Value')
-plt.ylabel('Frequency')
-plt.title('MLP Weight Histogram')
+
+# 创建画布和子图
+plt.figure(figsize=(20, 10))  # 增加清晰度
+
+# 绘制美化后的直方图
+plt.hist(
+    all_weights,
+    bins=50,              # 保留原始分箱数量
+    density=False,        # 显示频率而非密度
+    alpha=0.7,            # 设置透明度
+    color='#3498db',      # 使用更美观的蓝色
+    edgecolor='#2980b9',  # 设置边缘颜色
+    linewidth=0.8         # 设置边缘线宽
+)
+
+# 添加均值和中位数参考线
+plt.axvline(x=np.mean(all_weights), color='#e74c3c', linestyle='--', linewidth=1.5, label=f'Mean: {np.mean(all_weights):.4f}')
+plt.axvline(x=np.median(all_weights), color='#f39c12', linestyle='-.', linewidth=1.5, label=f'Median: {np.median(all_weights):.4f}')
+
+# 美化图表
+plt.xlabel('Weight Value', fontsize=12)
+plt.ylabel('Frequency', fontsize=12)
+plt.title('MLP Weight Distribution Histogram', fontsize=14, pad=10)
+plt.grid(axis='y', linestyle='--', alpha=0.7)  # 添加水平网格线
+plt.legend(frameon=True, framealpha=0.9, loc='upper right')  # 添加图例
+plt.tight_layout()  # 优化布局
+
+# 显示图表
 plt.show()
 
 # Close the TensorBoard writer
