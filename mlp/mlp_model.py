@@ -6,6 +6,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPRegressor
 import matplotlib.pyplot as plt
 import joblib
+from tensorboardX import SummaryWriter
 
 # 1. Load and preprocess data
 data = pd.read_csv('../cancer_reg.csv')
@@ -70,11 +71,32 @@ base_model = MLPRegressor(
     hidden_layer_sizes=(100,),
     activation='relu',
     solver='adam',
-    max_iter=1000,
-    random_state=42
+    max_iter=150,
+    random_state=42,
+    verbose=True  # 开启详细输出以记录损失值
 )
 
+# 创建 TensorBoard 写入器
+writer_base = SummaryWriter('logs/base_model')
+
 base_model.fit(X_train_scaled, y_train)
+
+# 记录训练损失到 TensorBoard
+for step, loss in enumerate(base_model.loss_curve_):
+    writer_base.add_scalar('training_loss', loss, step)
+
+# 关闭 TensorBoard 写入器
+writer_base.close()
+
+# 绘制并保存基础模型的损失曲线
+plt.figure(figsize=(10, 6))
+plt.plot(base_model.loss_curve_)
+plt.title('Base Model Training Loss')
+plt.xlabel('Iterations')
+plt.ylabel('Loss')
+plt.grid(True)
+plt.savefig('base_model_loss_curve.png')  # 保存图像
+plt.show()  # 显示图像
 
 # Evaluate base model
 y_pred_base = base_model.predict(X_test_scaled)
@@ -99,13 +121,34 @@ optimized_model = MLPRegressor(
     hidden_layer_sizes=(200, 100),
     activation='relu',
     solver='adam',
-    max_iter=1500,
+    max_iter=150,
     alpha=0.0001,
-    random_state=42
+    random_state=42,
+    verbose=True  # 开启详细输出以记录损失值
 )
+
+# 创建 TensorBoard 写入器
+writer_opt = SummaryWriter('logs/optimized_model')
 
 print("\nTraining optimized MLPRegressor model...")
 optimized_model.fit(X_train_sel, y_train)
+
+# 记录训练损失到 TensorBoard
+for step, loss in enumerate(optimized_model.loss_curve_):
+    writer_opt.add_scalar('training_loss', loss, step)
+
+# 关闭 TensorBoard 写入器
+writer_opt.close()
+
+# 绘制并保存优化模型的损失曲线
+plt.figure(figsize=(10, 6))
+plt.plot(optimized_model.loss_curve_)
+plt.title('Optimized Model Training Loss')
+plt.xlabel('Iterations')
+plt.ylabel('Loss')
+plt.grid(True)
+plt.savefig('optimized_model_loss_curve.png')  # 保存图像
+plt.show()  # 显示图像
 
 # Evaluate optimized model
 y_pred_opt = optimized_model.predict(X_test_sel)
@@ -126,6 +169,7 @@ plt.xlabel('Actual')
 plt.ylabel('Predicted')
 plt.title('Actual vs Predicted Values')
 plt.grid(True)
+plt.savefig('actual_vs_predicted.png')  # 保存预测对比图
 plt.show()
 
 # 10. Compare and save models
