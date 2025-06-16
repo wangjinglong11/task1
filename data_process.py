@@ -51,19 +51,21 @@ df = pd.read_csv("cancer_reg.csv")
 # 创建目录保存图片
 output_dir = "eda_plots"
 os.makedirs(output_dir, exist_ok=True)
-
+df['Incidence_Death_Ratio'] = df['incidenceRate'] / (df['TARGET_deathRate'] + 1e-6)
 # 特征列表（横轴）与目标列（纵轴）
 target = 'TARGET_deathRate'
 features = [
-    'MedianAge',
-    'PctBachDeg25_Over',
-    'medIncome',
-    'povertyPercent',
-    'PctEmployed16_Over',
-    'PctPrivateCoverage',
-    'PctPublicCoverage',
-    'PercentMarried',
-    'BirthRate'
+    # 'MedianAge',
+    # 'PctBachDeg25_Over',
+    # 'medIncome',
+    # 'povertyPercent',
+    # 'PctEmployed16_Over',
+    # 'PctPrivateCoverage',
+    # 'PctPublicCoverage',
+    # 'PercentMarried',
+    # 'BirthRate'
+    'incidenceRate',
+    'Incidence_Death_Ratio'
 ]
 
 # 开始绘图并保存
