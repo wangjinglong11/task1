@@ -109,6 +109,7 @@ plt.xlabel('Actual')
 plt.ylabel('Predicted')
 plt.title('Actual vs Predicted Values')
 plt.grid(True)
+plt.savefig('Actual vs Predicted Values.png', dpi=300, bbox_inches='tight')
 plt.show()
 
 # 9. Compare and save models
@@ -149,4 +150,5 @@ plt.xlabel('Feature Importance')
 plt.ylabel('Features')
 plt.title('Top 15 Important Features (Excluding State Features)')
 plt.gca().invert_yaxis()  # Reverse the order of the features
+plt.savefig('Top 15 Important Features (Excluding State Features).png', dpi=300, bbox_inches='tight')
 plt.show()

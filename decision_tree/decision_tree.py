@@ -88,6 +88,7 @@ print(f"R²: {r2_base:.4f}")
 plt.figure(figsize=(20, 10))
 plot_tree(base_model, feature_names=X.columns, filled=True, max_depth=2, fontsize=10)
 plt.title('Decision Tree Visualization (First 2 Levels)')
+plt.savefig('Decision Tree Visualization (First 2 Levels).png', dpi=300, bbox_inches='tight')
 plt.show()
 
 # Use all features for retraining
@@ -123,6 +124,7 @@ plt.xlabel('Actual')
 plt.ylabel('Predicted')
 plt.title('Actual vs Predicted Values')
 plt.grid(True)
+plt.savefig('Actual vs Predicted Values.png', dpi=300, bbox_inches='tight')
 plt.show()
 
 # 10. Compare and save models

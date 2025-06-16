@@ -102,6 +102,7 @@ plt.xlabel('Feature Importance')
 plt.ylabel('Features')
 plt.title('Top 15 Important Features')
 plt.tight_layout()
+plt.savefig('Top 15 Important Features.png', dpi=300, bbox_inches='tight')
 plt.show()
 
 # 8. Optimize model - based on feature importance
@@ -152,6 +153,7 @@ plt.xlabel('Actual')
 plt.ylabel('Predicted')
 plt.title('Actual vs Predicted Values')
 plt.grid(True)
+plt.savefig('Actual vs Predicted Values.png', dpi=300, bbox_inches='tight')
 plt.show()
 
 # 10. Compare and save models
